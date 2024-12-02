@@ -25,6 +25,7 @@ import com.noah.cocktailmeproject.screens.MainScreen
 import com.noah.cocktailmeproject.screens.SearchScreen
 import com.noah.cocktailmeproject.ui.theme.CocktailMeProjectTheme
 import com.noah.cocktailmeproject.view.Navigation.BottomNav
+import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +35,10 @@ class MainActivity : ComponentActivity() {
             CocktailMeProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val db = AppDatabase.getInstance(applicationContext)
+                    val viewModel = CocktailViewModel()
                     val cocktailsManager = CocktailsManager(db)
                     val navController = rememberNavController()
-                    App(navController = navController, modifier = Modifier.padding(innerPadding), cocktailsManager = cocktailsManager)
+                    App(navController = navController, modifier = Modifier.padding(innerPadding), cocktailsManager = cocktailsManager, db = db, viewModel = viewModel)
                 }
             }
         }
@@ -44,7 +46,7 @@ class MainActivity : ComponentActivity() {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: CocktailsManager){
+fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: CocktailsManager, db: AppDatabase, viewModel: CocktailViewModel){
     Scaffold(
         topBar = {
             TopAppBar(
@@ -62,7 +64,7 @@ fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: 
                 MainScreen(modifier = Modifier.padding(paddingValues), cocktailsManager, navController )
             }
             composable(Destination.Search.route){
-                SearchScreen(modifier = Modifier.padding(paddingValues))
+                SearchScreen(modifier = Modifier.padding(paddingValues), db, navController, viewModel)
             }
         }
     }

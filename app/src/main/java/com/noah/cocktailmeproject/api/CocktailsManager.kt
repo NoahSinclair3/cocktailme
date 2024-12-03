@@ -54,8 +54,8 @@ class CocktailsManager(database: AppDatabase) {
         })
     }
 
-    private suspend fun saveDataToDatabase(database: AppDatabase, movies: List<Cocktail>) {
+    private suspend fun saveDataToDatabase(database: AppDatabase, cocktails: List<Cocktail>) {
         Log.i("RDB", "Save Data function called")
-        database.cocktailOperations().insertAllCocktails(movies)
+        database.cocktailOperations().insertAllCocktails(cocktails)
     }
 }

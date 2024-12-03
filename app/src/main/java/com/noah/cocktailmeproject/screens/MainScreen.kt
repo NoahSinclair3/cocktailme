@@ -64,7 +64,6 @@ fun CocktailItem(
 ){
     Row(
         modifier = Modifier
-            .border(1.dp, Color.Black, shape = RoundedCornerShape(10.dp))
             .padding(5.dp)
             .fillMaxWidth()
             .background(Color.White)

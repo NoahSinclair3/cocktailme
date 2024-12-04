@@ -1,6 +1,8 @@
 package com.noah.cocktailmeproject.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.noah.cocktailmeproject.R
 import com.noah.cocktailmeproject.api.model.Cocktail
 import com.noah.cocktailmeproject.db.AppDatabase
 import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
@@ -42,31 +45,56 @@ fun CocktailScreen(
     db: AppDatabase,
     navController: NavController
 ){
+    val alcoholic = painterResource(id = R.drawable.alcoholic)
+    val nonAlcoholic = painterResource(id = R.drawable.no_alcohol)
     Box(
         modifier = modifier
-            .padding(start= 5.dp, top= 75.dp,end= 5.dp,bottom= 95.dp)
+            .padding(start = 5.dp, top = 75.dp, end = 5.dp, bottom = 95.dp)
             .fillMaxSize()
             .background(Color.White)
     ) {
-        IconButton(
-            onClick = { navController.popBackStack() },
-            modifier = modifier
-                .padding(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.Black
-            )
-        }
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .padding(16.dp)
                 .fillMaxWidth()
-                .align(Alignment.Center)
         ) {
             item {
+                Column(modifier = modifier.align(Alignment.TopStart)) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.Black,
+                        modifier = modifier
+                            .clickable { navController.popBackStack() }
+                    )
+                    IconButton(
+                        onClick = { navController.popBackStack() },
+                        modifier = modifier
+                            .fillMaxWidth()
+                    ) { }
+                    cocktail.strAlcoholic?.let {
+                        if(cocktail.strAlcoholic == "Alcoholic"){
+                            Image(
+                                painter = alcoholic,
+                                contentDescription = "Alcoholic",
+                                modifier = modifier
+                                    .align(Alignment.End)
+                                    .size(80.dp)
+                                    .fillMaxWidth()
+                            )
+                        }else{
+                            Image(
+                                painter = nonAlcoholic,
+                                contentDescription = "Non-Alcoholic",
+                                modifier = modifier
+                                    .align(Alignment.End)
+                                    .size(80.dp)
+                                    .fillMaxWidth()
+                            )
+                        }
+                    }
+                }
                 AsyncImage(
                     alignment = Alignment.Center,
                     modifier = modifier

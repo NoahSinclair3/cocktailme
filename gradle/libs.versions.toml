@@ -17,6 +17,8 @@ roomCommon = "2.6.1"
 roomRuntime = "2.6.1"
 adapters = "3.2.0-alpha11"
 coilCompose = "2.7.0"
+googleGmsGoogleServices = "4.4.2"
+firebaseAuth = "23.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,9 +45,11 @@ androidx-room-runtime={module="androidx.room:room-runtime", version.ref="roomRun
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 androidx-adapters = { group = "androidx.databinding", name = "adapters", version.ref = "adapters" }
 coil-compose= { module="io.coil-kt:coil-compose", version.ref ="coilCompose"}
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 

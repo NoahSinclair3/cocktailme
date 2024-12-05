@@ -18,6 +18,7 @@ fun BottomNav(navController: NavHostController) {
         val currentDestination = navBackStackEntry.value?.destination
 
         val ic_main = painterResource(id = R.drawable.ic_main)
+        val ic_all = painterResource(id = R.drawable.ic_all)
         val ic_search = painterResource(id = R.drawable.ic_search)
 
         NavigationBarItem(
@@ -28,6 +29,17 @@ fun BottomNav(navController: NavHostController) {
             } },
             icon = { Icon(painter = ic_main, contentDescription = "Main") },
             label = {Text(text=Destination.Main.route)
+
+            }
+        )
+        NavigationBarItem(
+            selected = currentDestination?.route == Destination.All.route,
+            onClick = { navController.navigate(Destination.All.route){
+                popUpTo(Destination.All.route)
+                launchSingleTop = true
+            } },
+            icon = { Icon(painter = ic_all, contentDescription = "All") },
+            label = {Text(text=Destination.All.route)
 
             }
         )

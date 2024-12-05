@@ -17,4 +17,7 @@ interface CocktailOperations {
 
     @Update
     fun updateCocktail(cocktail: Cocktail)
+
+    @Query("SELECT * FROM cocktails")
+    fun getAllCocktails(): List<Cocktail>
 }

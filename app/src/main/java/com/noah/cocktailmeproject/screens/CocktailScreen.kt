@@ -41,8 +41,6 @@ import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
 fun CocktailScreen(
     cocktail: Cocktail,
     modifier: Modifier = Modifier,
-    viewModel: CocktailViewModel,
-    db: AppDatabase,
     navController: NavController
 ){
     val alcoholic = painterResource(id = R.drawable.alcoholic)
@@ -132,8 +130,14 @@ fun CocktailScreen(
                     modifier = modifier.padding(start = 16.dp)
                 ) {
                     cocktail.strIngredient1?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure1 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure1})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure1})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -142,8 +146,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient2?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure2 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure2})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure2})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -152,8 +162,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient3?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure3 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure3})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure3})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -162,8 +178,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient4?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure4 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure4})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure4})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -172,8 +194,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient5?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure5 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure5})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure5})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -182,8 +210,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient6?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure6 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure6})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure6})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -192,8 +226,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient7?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure7 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure7})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure7})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -202,8 +242,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient8?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure8 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure8})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure8})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -212,8 +258,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient9?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure9 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure9})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure9})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -222,8 +274,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient10?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure10 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure10})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure10})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -232,8 +290,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient11?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure11 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure11})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure11})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -242,8 +306,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient12?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure12 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure12})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure12})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -252,8 +322,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient13?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure13 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure13})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure13})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -262,8 +338,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient14?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure14 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure14})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure14})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier
@@ -272,8 +354,14 @@ fun CocktailScreen(
                         )
                     }
                     cocktail.strIngredient15?.let {
+                        var ingredients = ""
+                        if (cocktail.strMeasure15 != null) {
+                            ingredients = "• $it (${cocktail.strMeasure15})"}
+                        else{
+                            ingredients = "• $it"
+                        }
                         Text(
-                            text = "• $it (${cocktail.strMeasure15})",
+                            text = ingredients,
                             color = Color.Black,
                             fontSize = 24.sp,
                             modifier = modifier

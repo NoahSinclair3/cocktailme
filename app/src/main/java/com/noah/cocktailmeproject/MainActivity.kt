@@ -27,6 +27,7 @@ import com.noah.cocktailmeproject.api.CocktailsManager
 import com.noah.cocktailmeproject.api.model.Cocktail
 import com.noah.cocktailmeproject.db.AppDatabase
 import com.noah.cocktailmeproject.destinations.Destination
+import com.noah.cocktailmeproject.screens.AllScreen
 import com.noah.cocktailmeproject.screens.CocktailScreen
 import com.noah.cocktailmeproject.screens.MainScreen
 import com.noah.cocktailmeproject.screens.SearchScreen
@@ -59,9 +60,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
 fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: CocktailsManager, db: AppDatabase, viewModel: CocktailViewModel){
-    var cocktail by remember {
-        mutableStateOf<Cocktail?>(null)
-    }
+    var cocktail by remember { mutableStateOf<Cocktail?>(null) }
 
     Scaffold(
         topBar = {
@@ -73,14 +72,17 @@ fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: 
 
     ){ paddingValues ->
         paddingValues.calculateBottomPadding()
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = modifier.padding(10.dp))
 
-        NavHost(navController = navController as NavHostController, startDestination = Destination.Main.route){
+        NavHost(navController = navController, startDestination = Destination.Main.route){
             composable(Destination.Main.route){
-                MainScreen(modifier = Modifier.padding(paddingValues), cocktailsManager, navController )
+                MainScreen(modifier = modifier.padding(paddingValues), cocktailsManager, viewModel, db, navController )
+            }
+            composable(Destination.All.route){
+                AllScreen(modifier = modifier.padding(paddingValues), cocktailsManager, navController )
             }
             composable(Destination.Search.route){
-                SearchScreen(modifier = Modifier.padding(paddingValues), db, navController, viewModel)
+                SearchScreen(modifier = modifier.padding(paddingValues), db, navController, viewModel)
             }
             composable(Destination.Cocktail.route) { navBackStackEntry ->
                 val idDrink:String? = navBackStackEntry.arguments?.getString("idDrink")
@@ -89,7 +91,7 @@ fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: 
                         cocktail = db.cocktailOperations().getCocktailById(idDrink)
                     }
                 }
-                cocktail?.let { CocktailScreen(it, modifier = Modifier.padding(), viewModel, db, navController)}
+                cocktail?.let { CocktailScreen(it, modifier = modifier.padding(), navController)}
             }
         }
     }

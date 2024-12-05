@@ -24,12 +24,18 @@ class CocktailsManager(database: AppDatabase) {
         }
 
     init {
-        getCocktails(database)
+        val allChar = "abcdefghijklmnopqrstuvwxyz0123456789"
+        for (char in allChar) {
+            getCocktails(char,database)
+        }
+        GlobalScope.launch {
+            saveDataToDatabase(database, _cocktailsResponse.value)
+        }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun getCocktails(database: AppDatabase){
-        val service = Api.retrofitService.getRandomCocktail()
+    private fun getCocktails(letter: Char,database: AppDatabase){
+        val service = Api.retrofitService.searchCocktailByFirstLetter(letter.toString())
 
         service.enqueue(object : Callback<CocktailData> {
             override fun onResponse(
@@ -38,12 +44,8 @@ class CocktailsManager(database: AppDatabase) {
             ) {
                 if (response.isSuccessful) {
                     Log.i("Data", "Data Loaded")
-                    _cocktailsResponse.value = response.body()?.drinks ?: emptyList()
+                    _cocktailsResponse.value += response.body()?.drinks ?: emptyList()
                     Log.i("DataStream", _cocktailsResponse.toString())
-
-                    GlobalScope.launch {
-                        saveDataToDatabase(database, _cocktailsResponse.value)
-                    }
                 }
             }
 

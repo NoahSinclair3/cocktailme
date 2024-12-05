@@ -10,6 +10,9 @@ interface CocktailService {
     @GET("search.php")
     fun searchCocktail(@Query("s") s: String): Call<CocktailData>
 
+    @GET("search.php")
+    fun searchCocktailByFirstLetter(@Query("f") f: String): Call<CocktailData>
+
     @GET("filter.php")
     fun searchByIngredient(@Query("i") i: String): Call<CocktailData>
 

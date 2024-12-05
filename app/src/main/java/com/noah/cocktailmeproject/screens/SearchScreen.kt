@@ -35,7 +35,7 @@ import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
 @Composable
 fun SearchScreen(modifier: Modifier, database: AppDatabase, navController: NavController, viewModel: CocktailViewModel){
     var active by remember { mutableStateOf(false) }
-    var query by rememberSaveable { viewModel.searchTerm }
+    var query by rememberSaveable { viewModel.query }
 
     Box(
         modifier = Modifier
@@ -47,8 +47,8 @@ fun SearchScreen(modifier: Modifier, database: AppDatabase, navController: NavCo
             horizontalAlignment = Alignment.Start,
         ) {
             SearchBar(modifier = Modifier.fillMaxWidth(),
-                query = viewModel.searchTerm.value,
-                onQueryChange = { viewModel.searchTerm.value = it },
+                query = viewModel.query.value,
+                onQueryChange = { viewModel.query.value = it },
                 onSearch = {
                     active = false
                     viewModel.searchCocktail(query,database)

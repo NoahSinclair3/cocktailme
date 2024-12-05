@@ -18,21 +18,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CocktailViewModel : ViewModel() {
-
     val cocktails = mutableStateOf<List<Cocktail>>(emptyList())
-
-    // search term
-    val searchTerm = mutableStateOf("")
-
-    // variable to keep track of Movie Icon state
-    // movieIconState = mutableStateOf <Map<Int,Boolean>>(emptyMap())
-
-    private var _cocktailsResponse = mutableStateOf<List<Cocktail>>(emptyList())
-
-    val cocktailResponse: MutableState<List<Cocktail>>
-        @Composable get() = remember{
-            _cocktailsResponse
-        }
+    val randomCocktail = mutableStateOf<List<Cocktail>>(emptyList())
+    val query = mutableStateOf("")
 
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -52,6 +40,29 @@ class CocktailViewModel : ViewModel() {
 
             override fun onFailure(call: Call<CocktailData>, t: Throwable) {
                 Log.d("search error", "${t.message}")
+            }
+
+        })
+
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun getRandomCocktail(database: AppDatabase){
+        val service = Api.retrofitService.getRandomCocktail()
+        service.enqueue(object : Callback<CocktailData> {
+            override fun onResponse(call: Call<CocktailData>, response: Response<CocktailData>) {
+                if (response.isSuccessful){
+                    Log.i("Random cocktail", "testing testing")
+                    randomCocktail.value += response.body()?.drinks ?: emptyList()
+                    Log.i("Value Found", cocktails.toString())
+                    GlobalScope.launch {
+                        database.cocktailOperations().insertAllCocktails(cocktails=cocktails.value)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<CocktailData>, t: Throwable) {
+                Log.d("random cocktail error", "${t.message}")
             }
 
         })

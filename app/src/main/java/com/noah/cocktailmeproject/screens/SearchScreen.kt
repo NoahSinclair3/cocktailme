@@ -31,6 +31,14 @@ import androidx.navigation.NavController
 import com.noah.cocktailmeproject.db.AppDatabase
 import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
 
+/**
+ * A composable function for the search screen.
+ *
+ * @param modifier modifiers for the composable.
+ * @param database the database for the app.
+ * @param navController the nav controller for the app.
+ * @param viewModel the viewModel for the screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(modifier: Modifier, database: AppDatabase, navController: NavController, viewModel: CocktailViewModel){

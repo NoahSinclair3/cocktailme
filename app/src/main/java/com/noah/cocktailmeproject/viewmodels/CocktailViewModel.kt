@@ -17,16 +17,32 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * A viewmodel for the different screens in the app.
+ *
+ * Inherits from the ViewModel class
+ */
 class CocktailViewModel : ViewModel() {
     val cocktails = mutableStateOf<List<Cocktail>>(emptyList())
     val randomCocktail = mutableStateOf<List<Cocktail>>(emptyList())
     val query = mutableStateOf("")
 
-
+    /**
+     * A function for searching a cocktail.
+     *
+     * @param cocktail the name of the cocktail to be searched.
+     * @param database the database of the app.
+     */
     @OptIn(DelicateCoroutinesApi::class)
     fun searchCocktail(cocktail:String, database: AppDatabase){
         val service = Api.retrofitService.searchCocktail(cocktail)
         service.enqueue(object : Callback<CocktailData> {
+            /**
+             * A function for overriding the onResponse action.
+             *
+             * @param call the cocktail data call.
+             * @param response the response to the api for cocktail data..
+             */
             override fun onResponse(call: Call<CocktailData>, response: Response<CocktailData>) {
                 if (response.isSuccessful){
                     Log.i("SearchData", "testing testing")
@@ -38,6 +54,12 @@ class CocktailViewModel : ViewModel() {
                 }
             }
 
+            /**
+             * A function for overriding the onFailure of a response.
+             *
+             * @param call the cocktail data call.
+             * @param t the throwable message.
+             */
             override fun onFailure(call: Call<CocktailData>, t: Throwable) {
                 Log.d("search error", "${t.message}")
             }
@@ -46,10 +68,21 @@ class CocktailViewModel : ViewModel() {
 
     }
 
+    /**
+     * A function for getting a random cocktail from the api.
+     *
+     * @param database the database of the app.
+     */
     @OptIn(DelicateCoroutinesApi::class)
     fun getRandomCocktail(database: AppDatabase){
         val service = Api.retrofitService.getRandomCocktail()
         service.enqueue(object : Callback<CocktailData> {
+            /**
+             * A function for overriding the onResponse action.
+             *
+             * @param call the cocktail data call.
+             * @param response the response to the api for cocktail data..
+             */
             override fun onResponse(call: Call<CocktailData>, response: Response<CocktailData>) {
                 if (response.isSuccessful){
                     Log.i("Random cocktail", "testing testing")
@@ -61,6 +94,12 @@ class CocktailViewModel : ViewModel() {
                 }
             }
 
+            /**
+             * A function for overriding the onFailure of a response.
+             *
+             * @param call the cocktail data call.
+             * @param t the throwable message.
+             */
             override fun onFailure(call: Call<CocktailData>, t: Throwable) {
                 Log.d("random cocktail error", "${t.message}")
             }

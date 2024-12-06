@@ -15,6 +15,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * A class for managing cocktail data.
+ *
+ * @param database the database for cocktail data.
+ */
 class CocktailsManager(database: AppDatabase) {
     private var _cocktailsResponse = mutableStateOf<List<Cocktail>>(emptyList())
 
@@ -22,7 +27,7 @@ class CocktailsManager(database: AppDatabase) {
         @Composable get() = remember{
             _cocktailsResponse
         }
-
+    // Block to initialize when the app starts
     init {
         val allChar = "abcdefghijklmnopqrstuvwxyz0123456789"
         for (char in allChar) {
@@ -33,11 +38,23 @@ class CocktailsManager(database: AppDatabase) {
         }
     }
 
+    /**
+     * A function for getting a list of cocktails by first letter.
+     *
+     * @param letter the letter to search by.
+     * @param database the database used for cocktail data.
+     */
     @OptIn(DelicateCoroutinesApi::class)
     private fun getCocktails(letter: Char,database: AppDatabase){
         val service = Api.retrofitService.searchCocktailByFirstLetter(letter.toString())
 
         service.enqueue(object : Callback<CocktailData> {
+            /**
+             * A function for overriding the onResponse action.
+             *
+             * @param call the cocktail data call.
+             * @param response the response to the api for cocktail data..
+             */
             override fun onResponse(
                 call: Call<CocktailData>,
                 response: Response<CocktailData>
@@ -49,6 +66,12 @@ class CocktailsManager(database: AppDatabase) {
                 }
             }
 
+            /**
+             * A function for overriding the onFailure of a response.
+             *
+             * @param call the cocktail data call.
+             * @param t the throwable message.
+             */
             override fun onFailure(call: Call<CocktailData>, t: Throwable) {
                 Log.d("error", { t.message }.toString())
             }
@@ -56,6 +79,12 @@ class CocktailsManager(database: AppDatabase) {
         })
     }
 
+    /**
+     *  A function that saves the data to the database.
+     *
+     *  @param database the database used for cocktail data.
+     *  @param cocktails the list of cocktails to be inserted to the database.
+     */
     private suspend fun saveDataToDatabase(database: AppDatabase, cocktails: List<Cocktail>) {
         Log.i("RDB", "Save Data function called")
         database.cocktailOperations().insertAllCocktails(cocktails)

@@ -37,14 +37,21 @@ import com.noah.cocktailmeproject.api.model.Cocktail
 import com.noah.cocktailmeproject.db.AppDatabase
 import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
 
+/**
+ * A composable function to display a cocktail.
+ *
+ * @param cocktail the cocktail to display.
+ * @param modifier modifier for the composable.
+ * @param navController the nav controller of the app
+ */
 @Composable
 fun CocktailScreen(
     cocktail: Cocktail,
     modifier: Modifier = Modifier,
     navController: NavController
 ){
-    val alcoholic = painterResource(id = R.drawable.alcoholic)
-    val nonAlcoholic = painterResource(id = R.drawable.no_alcohol)
+    val alcoholic = painterResource(id = R.drawable.alcoholic) //Alcoholic symbol
+    val nonAlcoholic = painterResource(id = R.drawable.no_alcohol) //Non-Alcoholic symbol
     Box(
         modifier = modifier
             .padding(start = 5.dp, top = 75.dp, end = 5.dp, bottom = 95.dp)

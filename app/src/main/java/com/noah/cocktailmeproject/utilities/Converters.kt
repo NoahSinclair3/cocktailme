@@ -8,6 +8,11 @@ import com.squareup.moshi.Types
 class Converters {
     private val moshi = Moshi.Builder().build()
 
+    /**
+     * Converts a type from string in to an int.
+     *
+     * @param value the string of values.
+     */
     @TypeConverter
     fun fromString(value: String?): List<Int>?{
         if (value == null) return null
@@ -17,7 +22,12 @@ class Converters {
 
         return adapter.fromJson(value)
     }
-    // converter a list of integers into a string
+
+    /**
+     * Converts a list of integers to a string.
+     *
+     * @param list the list of integers.
+     */
     @TypeConverter
     fun ListToString(list: List<Int>?): String?{
         if (list == null) return null

@@ -34,6 +34,12 @@ import com.google.firebase.auth.OAuthProvider
 import com.noah.cocktailmeproject.MainActivity
 import com.noah.cocktailmeproject.R
 
+/**
+ * A composable function for the sign in screen.
+ *
+ * @param context the app context.
+ * @param modifier modifier for the composables.
+ */
 @Composable
 fun SignInScreen(context: Context, modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
@@ -98,6 +104,14 @@ fun SignInScreen(context: Context, modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * A function for the sign in process
+ *
+ * @param email the email of the user.
+ * @param password the password of the user.
+ * @param context the app context.
+ * @param keyboardController the keyboard controller.
+ */
 private fun signIn(
     email: String,
     password: String,
@@ -121,7 +135,3 @@ private fun signIn(
         }
 }
 
-private fun gitHubSignIn(){
-    val provider = OAuthProvider.newBuilder("github.com")
-
-}

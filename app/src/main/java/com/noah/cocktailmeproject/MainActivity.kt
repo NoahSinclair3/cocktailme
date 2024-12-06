@@ -38,6 +38,11 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+/**
+ * A class for the main activity of the app.
+ *
+ * Inherits from Component Activity.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +61,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * A composable function for calling the main app to start.
+ *
+ * @param navController the nav controller of the app.
+ * @param modifier modifiers for the composables.
+ * @param cocktailsManager the cocktail manager for the app.
+ * @param db the database for the app.
+ * @param viewModel the viewmodel for the screens.
+ */
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
@@ -76,7 +90,7 @@ fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: 
 
         NavHost(navController = navController, startDestination = Destination.Main.route){
             composable(Destination.Main.route){
-                MainScreen(modifier = modifier.padding(paddingValues), cocktailsManager, viewModel, db, navController )
+                MainScreen(modifier = modifier.padding(paddingValues), viewModel, db, navController )
             }
             composable(Destination.All.route){
                 AllScreen(modifier = modifier.padding(paddingValues), cocktailsManager, navController )

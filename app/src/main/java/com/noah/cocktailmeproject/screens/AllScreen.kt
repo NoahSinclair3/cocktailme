@@ -16,6 +16,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.noah.cocktailmeproject.api.model.Cocktail
 
+/**
+ * A composable function for displaying all cocktails.
+ *
+ * @param modifier modifiers for the composable.
+ * @param cocktailsManager the cocktail manager for the app.
+ * @param navController the navcontroller for the app.
+ */
 @Composable
 fun AllScreen(
     modifier: Modifier = Modifier,

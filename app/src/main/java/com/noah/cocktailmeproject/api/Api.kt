@@ -5,7 +5,11 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+/**
+ * An api object to get an api using retrofit.
+ */
 object Api {
+    //Api base url
     private val BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/"
 
     private val moshi = Moshi.Builder()

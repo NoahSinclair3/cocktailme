@@ -12,6 +12,11 @@ import androidx.compose.ui.Modifier
 import com.noah.cocktailmeproject.screens.SignInScreen
 import com.noah.cocktailmeproject.ui.theme.CocktailMeProjectTheme
 
+/**
+ * A class for the sign in screen activity.
+ *
+ * Inherits from Component Activity.
+ */
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

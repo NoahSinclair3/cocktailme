@@ -7,6 +7,62 @@ import androidx.room.TypeConverter
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * A class for a cocktail.
+ *
+ * @property dateModified date the cocktail was modified.
+ * @property idDrink the id of the cocktail.
+ * @property strAlcoholic tells if the drink is alcoholic or not.
+ * @property strCategory the category of drink.
+ * @property strCreativeCommonsConfirmed tells if the drink is creative commons.
+ * @property strDrink the name if the drink.
+ * @property strDrinkAlternate the alternate name of the drink.
+ * @property strDrinkThumb the thumbnail of the drink.
+ * @property strGlass type of glass the drink goes in.
+ * @property strIBA international bartenders association classification.
+ * @property strImageAttribution credit for the photo.
+ * @property strImageSource source for the image.
+ * @property strIngredient1 first ingredient.
+ * @property strIngredient2 second ingredient.
+ * @property strIngredient3 third ingredient.
+ * @property strIngredient4 fourth ingredient.
+ * @property strIngredient5 fifth ingredient.
+ * @property strIngredient6 sixth ingredient.
+ * @property strIngredient7 seventh ingredient.
+ * @property strIngredient8 eighth ingredient.
+ * @property strIngredient9 ninth ingredient.
+ * @property strIngredient10 tenth ingredient.
+ * @property strIngredient11 eleventh ingredient.
+ * @property strIngredient12 twelfth ingredient.
+ * @property strIngredient13 thirteenth ingredient.
+ * @property strIngredient14 fourteenth ingredient.
+ * @property strIngredient15 fifteenth ingredient.
+ * @property strMeasure1 first ingredient measurement.
+ * @property strMeasure2 second ingredient measurement.
+ * @property strMeasure3 third ingredient measurement.
+ * @property strMeasure4 fourth ingredient measurement.
+ * @property strMeasure5 fifth ingredient measurement.
+ * @property strMeasure6 sixth ingredient measurement.
+ * @property strMeasure7 seventh ingredient measurement.
+ * @property strMeasure8 eighth ingredient measurement.
+ * @property strMeasure9 ninth ingredient measurement.
+ * @property strMeasure10 tenth ingredient measurement.
+ * @property strMeasure11 eleventh ingredient measurement.
+ * @property strMeasure12 twelfth ingredient measurement.
+ * @property strMeasure13 thirteenth ingredient measurement.
+ * @property strMeasure14 fourteenth ingredient measurement.
+ * @property strMeasure15 fifteenth ingredient measurement.
+ * @property strInstructions instructions in english.
+ * @property strInstructionsDE instructions in dutch.
+ * @property strInstructionsES instructions in spanish.
+ * @property strInstructionsFR instructions in french.
+ * @property strInstructionsIT instructions in italian.
+ * @property strInstructionsZHHANS miscellaneous instructions.
+ * @property strInstructionsZHHANT miscellaneous instructions.
+ * @property strTags tags for the drink.
+ * @property strVideo video instructions for the drink.
+ *
+ */
 @Entity(tableName = "cocktails")
 @JsonClass(generateAdapter = true)
 data class Cocktail(

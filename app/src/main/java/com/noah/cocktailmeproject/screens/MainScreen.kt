@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -27,6 +29,7 @@ import androidx.navigation.NavController
 import com.noah.cocktailmeproject.api.CocktailsManager
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,10 +41,17 @@ import coil.request.ImageRequest
 import com.noah.cocktailmeproject.db.AppDatabase
 import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
 
+/**
+ * A composable function for the main screen of the app.
+ *
+ * @param modifier modifiers for the composables.
+ * @param viewModel the viewModel for the screen.
+ * @param db the app database.
+ * @param navController the nav controller for the app.
+ */
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    cocktailsManager: CocktailsManager,
     viewModel: CocktailViewModel,
     db: AppDatabase,
     navController: NavController
@@ -73,17 +83,23 @@ fun MainScreen(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             var cocktail2 by remember { mutableStateOf<Cocktail?>(null) }
+            var randomCocktail by remember {mutableStateOf<List<Cocktail>>(emptyList())}
 
             Button(onClick = {
                 viewModel.getRandomCocktail(db)
             }) {
                 Text("Get Random Cocktail")
             }
-
-            LazyColumn{
-                items(viewModel.randomCocktail.value){ cocktail ->
-                    cocktail2 = cocktail
-                    CocktailItem(cocktail = cocktail, navController = navController)
+            Card(modifier = modifier
+                .width(400.dp)
+                .height(880.dp),
+                elevation = CardDefaults.cardElevation(10.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                LazyColumn {
+                    items(viewModel.randomCocktail.value) { cocktail ->
+                        //cocktail2 = cocktail
+                        CocktailItem(cocktail = cocktail, navController = navController)
+                    }
                 }
             }
             //cocktail2?.let { CocktailScreen(it, modifier = Modifier.padding(), navController)}
@@ -91,6 +107,12 @@ fun MainScreen(
     }
 }
 
+/**
+ * A composable function for a cocktail item in a menu.
+ *
+ * @param cocktail the cocktail to be displayed.
+ * @param navController the nav controller for the app.
+ */
 @Composable
 fun CocktailItem(
     cocktail: Cocktail,

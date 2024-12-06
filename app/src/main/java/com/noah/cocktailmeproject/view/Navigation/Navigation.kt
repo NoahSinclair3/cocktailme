@@ -11,6 +11,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.noah.cocktailmeproject.R
 import com.noah.cocktailmeproject.destinations.Destination
 
+/**
+ * A composable function for the bottom navigation bar.
+ *
+ * @param navController the nav controller for the app.
+ */
 @Composable
 fun BottomNav(navController: NavHostController) {
     NavigationBar {

@@ -34,17 +34,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.OAuthProvider
 import com.noah.cocktailmeproject.MainActivity
 import com.noah.cocktailmeproject.R
-import com.noah.cocktailmeproject.destinations.Destination
 
 /**
- * A composable function for the sign in screen.
+ * A composable function for the sign up screen.
  *
  * @param context the app context.
  * @param modifier modifier for the composables.
  * @param navController the navController for the app
  */
 @Composable
-fun SignInScreen(context: Context, modifier: Modifier, navController: NavController) {
+fun SignUpScreen(context: Context, modifier: Modifier, navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
@@ -65,6 +64,12 @@ fun SignInScreen(context: Context, modifier: Modifier, navController: NavControl
         Text(
             text = "Welcome to Cocktail Me",
             style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        Text(
+            text = "Please enter an email and password to create a new account",
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -96,19 +101,8 @@ fun SignInScreen(context: Context, modifier: Modifier, navController: NavControl
         Button(
             onClick = {
                 isLoading = true
-                signIn(email, password, context, keyboardController)
+                signUp(email, password, context, keyboardController)
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text("Sign In")
-        }
-        Button(
-            onClick = { navController.navigate(Destination.SignUp.route){
-                popUpTo(Destination.SignUp.route)
-                launchSingleTop = true
-            }},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -119,34 +113,37 @@ fun SignInScreen(context: Context, modifier: Modifier, navController: NavControl
 }
 
 /**
- * A function for the sign in process
+ * A function for the sign up process
  *
  * @param email the email of the user.
  * @param password the password of the user.
  * @param context the app context.
  * @param keyboardController the keyboard controller.
  */
-private fun signIn(
+private fun signUp(
     email: String,
     password: String,
     context: Context,
     keyboardController: SoftwareKeyboardController?
 ) {
     val auth = FirebaseAuth.getInstance()
-
-    auth.signInWithEmailAndPassword(email, password)
+    try {
+    auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val intent = Intent(context, MainActivity::class.java)
-                Toast.makeText(context, "Sign in Successful!", Toast.LENGTH_SHORT).show()
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.putExtra("userID", FirebaseAuth.getInstance().currentUser?.uid)
-                context.startActivity(intent)
+
+                    val intent = Intent(context, MainActivity::class.java)
+                    Toast.makeText(context, "Sign up Successful!", Toast.LENGTH_SHORT).show()
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("userID", FirebaseAuth.getInstance().currentUser?.uid)
+                    context.startActivity(intent)
+
             } else {
-                Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Sign Up Failed", Toast.LENGTH_SHORT).show()
             }
             keyboardController?.hide()
         }
+    }catch(e: Exception){Toast.makeText(context, "Sign Up Failed", Toast.LENGTH_SHORT).show()}
 }
 
 

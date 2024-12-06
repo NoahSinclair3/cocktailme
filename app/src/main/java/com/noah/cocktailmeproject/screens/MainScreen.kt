@@ -77,7 +77,7 @@ fun MainScreen(
             )
             Text(
                 text = "Look through our list of cocktails, or search for one with the tabs below! If you're feeling fun, hit the button below to bring up a random one and try to make it!",
-                color = Color.Gray,
+                color = Color.Black,
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -153,7 +153,7 @@ fun CocktailItem(
             cocktail.strCategory?.let {
                 Text(
                     text = it,
-                    color = Color.Gray
+                    color = Color.Black
                 )
             }
         }

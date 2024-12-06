@@ -45,13 +45,9 @@ fun SearchScreen(modifier: Modifier, database: AppDatabase, navController: NavCo
     var active by remember { mutableStateOf(false) }
     var query by rememberSaveable { viewModel.query }
 
-    Box(
-        modifier = Modifier
-            .background(Color.White)
-    ){
+    Box(modifier = Modifier.background(Color.White)){
         Column(
-            modifier = modifier
-                .fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.Start,
         ) {
             SearchBar(modifier = Modifier.fillMaxWidth(),
@@ -69,30 +65,30 @@ fun SearchScreen(modifier: Modifier, database: AppDatabase, navController: NavCo
                 trailingIcon = {
                     if (active) {
                         Icon(
+                            tint = Color.Black,
                             imageVector = Icons.Default.Close,
                             contentDescription = "Close Icon",
                             modifier = Modifier.clickable {
                                 if (query.isNotEmpty()) {
                                     query = ""
-                                }else{
+                                } else {
                                     active = false
-                                }})
+                                }
+                            })
                     }
-                               },
-                   ) {
-                
-            }
+                },
+                ){
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(10.dp)
+                )
 
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(10.dp)
-            )
-
-            for (cocktail in viewModel.cocktails.value) {
-                LazyColumn{
-                    items(viewModel.cocktails.value){ cocktail ->
-                        CocktailItem(cocktail, navController = navController)
+                for (cocktail in viewModel.cocktails.value) {
+                    LazyColumn {
+                        items(viewModel.cocktails.value) { cocktail ->
+                            CocktailItem(cocktail, navController = navController)
+                        }
                     }
                 }
             }

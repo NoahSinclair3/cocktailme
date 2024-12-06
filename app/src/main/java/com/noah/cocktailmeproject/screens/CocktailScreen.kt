@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -65,42 +66,40 @@ fun CocktailScreen(
                 .fillMaxWidth()
         ) {
             item {
-                Column(modifier = modifier.align(Alignment.TopStart)) {
+                Box(modifier = Modifier.fillMaxWidth()) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
                         tint = Color.Black,
-                        modifier = modifier
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
                             .clickable { navController.popBackStack() }
                     )
-                    IconButton(
-                        onClick = { navController.popBackStack() },
-                        modifier = modifier
-                            .fillMaxWidth()
-                    ) { }
-                    cocktail.strAlcoholic?.let {
-                        if(cocktail.strAlcoholic == "Alcoholic"){
-                            Image(
-                                painter = alcoholic,
-                                contentDescription = "Alcoholic",
-                                modifier = modifier
-                                    .align(Alignment.End)
-                                    .size(80.dp)
-                                    .fillMaxWidth()
-                            )
-                        }else{
-                            Image(
-                                painter = nonAlcoholic,
-                                contentDescription = "Non-Alcoholic",
-                                modifier = modifier
-                                    .align(Alignment.End)
-                                    .size(80.dp)
-                                    .fillMaxWidth()
-                            )
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(end = 16.dp)
+                    ) {
+                        cocktail.strAlcoholic?.let {
+                            if (cocktail.strAlcoholic == "Alcoholic") {
+                                Image(
+                                    painter = alcoholic,
+                                    contentDescription = "Alcoholic",
+                                    modifier = Modifier
+                                        .size(80.dp)
+                                )
+                            } else {
+                                Image(
+                                    painter = nonAlcoholic,
+                                    contentDescription = "Non-Alcoholic",
+                                    modifier = Modifier
+                                        .size(80.dp)
+                                )
+                            }
                         }
                     }
                 }
-                AsyncImage(
+        AsyncImage(
                     alignment = Alignment.Center,
                     modifier = modifier
                         .size(350.dp)

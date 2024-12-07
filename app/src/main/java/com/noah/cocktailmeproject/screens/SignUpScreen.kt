@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.OAuthProvider
 import com.noah.cocktailmeproject.MainActivity
 import com.noah.cocktailmeproject.R
+import com.noah.cocktailmeproject.destinations.Destination
 
 /**
  * A composable function for the sign up screen.
@@ -108,6 +109,17 @@ fun SignUpScreen(context: Context, modifier: Modifier, navController: NavControl
                 .padding(8.dp)
         ) {
             Text("Sign Up")
+        }
+        Button(
+            onClick = { navController.navigate(Destination.SignIn.route){
+                popUpTo(Destination.SignIn.route)
+                launchSingleTop = true
+            }},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text("Sign In")
         }
     }
 }

@@ -132,21 +132,22 @@ private fun signIn(
     context: Context,
     keyboardController: SoftwareKeyboardController?
 ) {
-    val auth = FirebaseAuth.getInstance()
-
-    auth.signInWithEmailAndPassword(email, password)
-        .addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val intent = Intent(context, MainActivity::class.java)
-                Toast.makeText(context, "Sign in Successful!", Toast.LENGTH_SHORT).show()
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.putExtra("userID", FirebaseAuth.getInstance().currentUser?.uid)
-                context.startActivity(intent)
-            } else {
-                Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()
+    try {
+        val auth = FirebaseAuth.getInstance()
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val intent = Intent(context, MainActivity::class.java)
+                    Toast.makeText(context, "Sign in Successful!", Toast.LENGTH_SHORT).show()
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("userID", FirebaseAuth.getInstance().currentUser?.uid)
+                    context.startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()
+                }
+                keyboardController?.hide()
             }
-            keyboardController?.hide()
-        }
+    }catch(e: Exception){Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()}
 }
 
 

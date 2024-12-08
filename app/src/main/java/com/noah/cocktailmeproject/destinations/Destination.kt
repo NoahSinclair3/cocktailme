@@ -11,4 +11,5 @@ sealed class Destination(val route: String) {
     object SignUp: Destination("signUp") //Routes to the sign up screen
     object ResetPassword: Destination("resetPassword") //Routes to the sign up screen
     object Cocktail: Destination("cocktail/{idDrink}") //Routes to the cocktail screen
+    object Edit: Destination("edit") //Routes to the all screen
 }

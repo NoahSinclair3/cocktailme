@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -36,6 +37,7 @@ import coil.request.ImageRequest
 import com.noah.cocktailmeproject.R
 import com.noah.cocktailmeproject.api.model.Cocktail
 import com.noah.cocktailmeproject.db.AppDatabase
+import com.noah.cocktailmeproject.destinations.Destination
 import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
 
 /**
@@ -395,7 +397,21 @@ fun CocktailScreen(
                             .fillMaxWidth()
                     )
                 }
+                Button(
+                    onClick = { navController.navigate(Destination.Edit.route){
+                        popUpTo(Destination.Edit.route)
+                        launchSingleTop = true
+                    }},
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Text("Edit")
+                }
             }
         }
     }
 }
+
+

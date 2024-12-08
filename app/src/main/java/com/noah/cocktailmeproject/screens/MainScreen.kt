@@ -1,5 +1,6 @@
 package com.noah.cocktailmeproject.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.noah.cocktailmeproject.api.CocktailsManager
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -40,6 +40,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.noah.cocktailmeproject.db.AppDatabase
 import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * A composable function for the main screen of the app.
@@ -49,6 +52,8 @@ import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
  * @param db the app database.
  * @param navController the nav controller for the app.
  */
+@OptIn(DelicateCoroutinesApi::class)
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -62,10 +67,10 @@ fun MainScreen(
             .background(Color.White)
     ) {
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(16.dp)
         ) {
             Text(
                 text = "Welcome to Cocktail Me",
@@ -82,12 +87,10 @@ fun MainScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            var cocktail2 by remember { mutableStateOf<Cocktail?>(null) }
-            var randomCocktail by remember {mutableStateOf<List<Cocktail>>(emptyList())}
+            var randomCocktails by remember { mutableStateOf<List<Cocktail>>(emptyList()) }
+            randomCocktails = viewModel.randomCocktail.value
 
-            Button(onClick = {
-                viewModel.getRandomCocktail(db)
-            }) {
+            Button(onClick = { viewModel.getRandomCocktail(db) }) {
                 Text("Get Random Cocktail")
             }
             Card(modifier = modifier
@@ -96,13 +99,15 @@ fun MainScreen(
                 elevation = CardDefaults.cardElevation(10.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)) {
                 LazyColumn {
-                    items(viewModel.randomCocktail.value) { cocktail ->
-                        //cocktail2 = cocktail
+                    items(randomCocktails) { randomCocktail ->
+                        var cocktail: Cocktail = randomCocktail
+                        GlobalScope.launch {
+                            cocktail = viewModel.cocktail?.let { db.cocktailOperations().getCocktailById(it.idDrink) }!!
+                        }
                         CocktailItem(cocktail = cocktail, navController = navController)
                     }
                 }
             }
-            //cocktail2?.let { CocktailScreen(it, modifier = Modifier.padding(), navController)}
         }
     }
 }

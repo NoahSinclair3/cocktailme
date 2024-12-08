@@ -23,9 +23,10 @@ import retrofit2.Response
  * Inherits from the ViewModel class
  */
 class CocktailViewModel : ViewModel() {
-    val cocktails = mutableStateOf<List<Cocktail>>(emptyList())
-    val randomCocktail = mutableStateOf<List<Cocktail>>(emptyList())
-    val query = mutableStateOf("")
+    var cocktails = mutableStateOf<List<Cocktail>>(emptyList())
+    var cocktail: Cocktail? = null
+    var randomCocktail = mutableStateOf<List<Cocktail>>(emptyList())
+    var query = mutableStateOf("")
 
     /**
      * A function for searching a cocktail.
@@ -86,10 +87,12 @@ class CocktailViewModel : ViewModel() {
             override fun onResponse(call: Call<CocktailData>, response: Response<CocktailData>) {
                 if (response.isSuccessful){
                     Log.i("Random cocktail", "testing testing")
-                    randomCocktail.value += response.body()?.drinks ?: emptyList()
-                    Log.i("Value Found", cocktails.toString())
+                    //randomCocktail.value += response.body()?.drinks ?: emptyList()
+                    cocktail = response.body()?.drinks?.get(0)
+                    randomCocktail.value += cocktail!!
+                    Log.i("Value Found", randomCocktail.toString())
                     GlobalScope.launch {
-                        database.cocktailOperations().insertAllCocktails(cocktails=cocktails.value)
+                        database.cocktailOperations().insertAllCocktails(cocktails=randomCocktail.value)
                     }
                 }
             }
@@ -105,6 +108,12 @@ class CocktailViewModel : ViewModel() {
             }
 
         })
+    }
 
+    @OptIn(DelicateCoroutinesApi::class)
+    fun updateCocktail(db: AppDatabase, cocktail: Cocktail){
+        GlobalScope.launch {
+            db.cocktailOperations().updateCocktail(cocktail)
+        }
     }
 }

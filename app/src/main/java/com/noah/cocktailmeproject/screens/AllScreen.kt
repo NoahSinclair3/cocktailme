@@ -1,5 +1,6 @@
 package com.noah.cocktailmeproject.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,18 +16,25 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.noah.cocktailmeproject.api.model.Cocktail
+import com.noah.cocktailmeproject.db.AppDatabase
+import com.noah.cocktailmeproject.viewmodels.CocktailViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * A composable function for displaying all cocktails.
  *
  * @param modifier modifiers for the composable.
- * @param cocktailsManager the cocktail manager for the app.
+ * @param db the database for the app.
  * @param navController the navcontroller for the app.
  */
+@SuppressLint("CoroutineCreationDuringComposition")
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun AllScreen(
     modifier: Modifier = Modifier,
-    cocktailsManager: CocktailsManager,
+    db: AppDatabase,
     navController: NavController){
     Box(
         modifier = modifier
@@ -35,11 +43,12 @@ fun AllScreen(
 
     ){
         var cocktails by remember { mutableStateOf<List<Cocktail>>(emptyList()) }
-        cocktails = cocktailsManager.cocktailResponse.value.sortedBy { it.strDrink }
+        GlobalScope.launch {cocktails = db.cocktailOperations().getAllCocktails().sortedBy { it.strDrink }}
         LazyColumn{
-            items(cocktails){ cocktail ->
+            items(cocktails) { cocktail ->
                 CocktailItem(cocktail = cocktail, navController = navController)
             }
+
         }
     }
 

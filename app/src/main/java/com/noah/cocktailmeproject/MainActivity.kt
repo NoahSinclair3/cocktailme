@@ -29,6 +29,7 @@ import com.noah.cocktailmeproject.db.AppDatabase
 import com.noah.cocktailmeproject.destinations.Destination
 import com.noah.cocktailmeproject.screens.AllScreen
 import com.noah.cocktailmeproject.screens.CocktailScreen
+import com.noah.cocktailmeproject.screens.EditScreen
 import com.noah.cocktailmeproject.screens.MainScreen
 import com.noah.cocktailmeproject.screens.SearchScreen
 import com.noah.cocktailmeproject.ui.theme.CocktailMeProjectTheme
@@ -93,7 +94,7 @@ fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: 
                 MainScreen(modifier = modifier.padding(paddingValues), viewModel, db, navController )
             }
             composable(Destination.All.route){
-                AllScreen(modifier = modifier.padding(paddingValues), cocktailsManager, navController )
+                AllScreen(modifier = modifier.padding(paddingValues),db, navController )
             }
             composable(Destination.Search.route){
                 SearchScreen(modifier = modifier.padding(paddingValues), db, navController, viewModel)
@@ -106,6 +107,15 @@ fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: 
                     }
                 }
                 cocktail?.let { CocktailScreen(it, modifier = modifier.padding(), navController)}
+            }
+            composable(Destination.Edit.route) { navBackStackEntry ->
+                val idDrink:String? = navBackStackEntry.arguments?.getString("idDrink")
+                GlobalScope.launch{
+                    if (idDrink != null){
+                        cocktail = db.cocktailOperations().getCocktailById(idDrink)
+                    }
+                }
+                cocktail?.let { EditScreen(db, viewModel, it, modifier = modifier.padding(), navController)}
             }
         }
     }

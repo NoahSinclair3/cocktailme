@@ -32,6 +32,7 @@ import com.noah.cocktailmeproject.destinations.Destination
 import com.noah.cocktailmeproject.screens.AllScreen
 import com.noah.cocktailmeproject.screens.CocktailScreen
 import com.noah.cocktailmeproject.screens.MainScreen
+import com.noah.cocktailmeproject.screens.ResetPasswordScreen
 import com.noah.cocktailmeproject.screens.SearchScreen
 import com.noah.cocktailmeproject.screens.SignInScreen
 import com.noah.cocktailmeproject.screens.SignUpScreen
@@ -79,6 +80,9 @@ fun SignInApp(modifier: Modifier, context: Context, navController: NavHostContro
         }
         composable(Destination.SignUp.route){
             SignUpScreen(modifier = modifier, context = context, navController = navController)
+        }
+        composable(Destination.ResetPassword.route){
+            ResetPasswordScreen(modifier = modifier, context = context, navController = navController)
         }
     }
 }

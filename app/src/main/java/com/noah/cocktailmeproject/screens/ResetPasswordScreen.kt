@@ -1,7 +1,9 @@
 package com.noah.cocktailmeproject.screens
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,22 +39,16 @@ import com.noah.cocktailmeproject.R
 import com.noah.cocktailmeproject.destinations.Destination
 
 /**
- * A composable function for the sign in screen.
+ * A composable function for the reset password screen.
  *
  * @param context the app context.
  * @param modifier modifier for the composables.
  * @param navController the navController for the app
  */
 @Composable
-fun SignInScreen(context: Context, modifier: Modifier, navController: NavController) {
+fun ResetPasswordScreen(context: Context, modifier: Modifier, navController: NavController) {
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
-    var visibility by remember { mutableStateOf(false) }
-    var visibilityIcon = if (visibility) painterResource(id = R.drawable.visible)
-        else painterResource(id = R.drawable.not_visible)
-    var passwordVisibility = if (visibility) VisualTransformation.None
-        else PasswordVisualTransformation()
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
@@ -68,6 +64,12 @@ fun SignInScreen(context: Context, modifier: Modifier, navController: NavControl
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(bottom = 16.dp)
         )
+        Text(
+            text = "Please enter an email to reset your password",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
         TextField(
             value = email,
             onValueChange = { email = it },
@@ -77,88 +79,54 @@ fun SignInScreen(context: Context, modifier: Modifier, navController: NavControl
             label = { Text("Email") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email)
         )
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            label = { Text("Password") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
-            visualTransformation = passwordVisibility,
-            trailingIcon = {
-                Icon(painter = visibilityIcon,
-                    contentDescription = "visibility icon",
-                    modifier = modifier.clickable { visibility = !visibility  }
-                )
-            }
-        )
         Button(
             onClick = {
                 isLoading = true
-                signIn(email, password, context, keyboardController)
+                sendResetEmail(email, context, keyboardController)
             },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text("Send Email")
+        }
+        Button(
+            onClick = { navController.navigate(Destination.SignIn.route){
+                popUpTo(Destination.SignIn.route)
+                launchSingleTop = true
+            }},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
             Text("Sign In")
         }
-        Button(
-            onClick = { navController.navigate(Destination.ResetPassword.route){
-                popUpTo(Destination.ResetPassword.route)
-                launchSingleTop = true
-            }},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text("Reset Password")
-        }
-        Button(
-            onClick = { navController.navigate(Destination.SignUp.route){
-                popUpTo(Destination.SignUp.route)
-                launchSingleTop = true
-            }},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text("Sign Up")
-        }
     }
 }
 
 /**
- * A function for the sign in process
+ * A function for sending the reset password.
  *
  * @param email the email of the user.
- * @param password the password of the user.
  * @param context the app context.
  * @param keyboardController the keyboard controller.
  */
-private fun signIn(
+private fun sendResetEmail(
     email: String,
-    password: String,
     context: Context,
     keyboardController: SoftwareKeyboardController?
 ) {
+    val auth = FirebaseAuth.getInstance()
     try {
-        val auth = FirebaseAuth.getInstance()
-        auth.signInWithEmailAndPassword(email, password)
+        auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(context, MainActivity::class.java)
-                    Toast.makeText(context, "Sign in Successful!", Toast.LENGTH_SHORT).show()
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.putExtra("userID", FirebaseAuth.getInstance().currentUser?.uid)
-                    context.startActivity(intent)
-                } else {
-                    Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Email sent.")
+                    Toast.makeText(context, "Email Sent", Toast.LENGTH_SHORT).show()
                 }
-                keyboardController?.hide()
             }
-    }catch(e: Exception){Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()}
+            keyboardController?.hide()
+    }catch(e: Exception){Toast.makeText(context, "Password Reset Failed", Toast.LENGTH_SHORT).show()}
 }
 
 

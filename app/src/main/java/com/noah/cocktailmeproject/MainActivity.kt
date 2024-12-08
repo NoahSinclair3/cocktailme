@@ -5,9 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -76,12 +79,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App(navController: NavHostController, modifier: Modifier, cocktailsManager: CocktailsManager, db: AppDatabase, viewModel: CocktailViewModel){
     var cocktail by remember { mutableStateOf<Cocktail?>(null) }
+    val logo = painterResource(id = R.drawable.cm_logo)
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Cocktail Me") }
+                title = { Image(
+                    painter = logo,
+                    contentDescription = "LOGO",
+                    modifier = Modifier
+                        .size(80.dp)
+                ) }
             )
+
         },
         bottomBar = { BottomNav(navController = navController) }
 

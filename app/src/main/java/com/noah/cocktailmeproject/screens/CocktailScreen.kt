@@ -57,7 +57,7 @@ fun CocktailScreen(
     val nonAlcoholic = painterResource(id = R.drawable.no_alcohol) //Non-Alcoholic symbol
     Box(
         modifier = modifier
-            .padding(start = 5.dp, top = 75.dp, end = 5.dp, bottom = 95.dp)
+            .padding(start = 5.dp, top = 30.dp, end = 5.dp, bottom = 95.dp)
             .fillMaxSize()
             .background(Color.White)
     ) {
